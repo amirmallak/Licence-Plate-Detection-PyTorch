@@ -1,12 +1,13 @@
 import torch
 import config
+import pandas as pd
 import torchvision.transforms as transforms
 
 from loading_image_label_pair import CarLicensePlateDataset
 from torch.utils.data import DataLoader, random_split
 
 
-def create_datasets(dataset, width, height) -> tuple:
+def _create_datasets(dataset: pd.DataFrame, width: int, height: int) -> tuple:
     # Building the Training, Validation, and Test datasets
     data_dir = config.data_dir
 

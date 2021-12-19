@@ -1,13 +1,13 @@
 import config
 
+from AI_Model import build_AI_model
 from data_exploring import exploring
 from loading_data import data_loading
-from AI_Model import build_AI_model
 
 
 def license_plate_detection():
     WIDTH = int(config.width)  # Recommended value of 224
-    HEIGHT = int(config.height)  # # Recommended value of 224
+    HEIGHT = int(config.height)  # Recommended value of 224
     CHANNEL = int(config.channels)
 
     # Loading the Dataset from Kaggle, creating a DataFrame from, and saving it into a .cvs file for later use
@@ -16,7 +16,12 @@ def license_plate_detection():
     # kaggle_data_loading()
 
     # Pre processing the dataset images and it's corresponding .csv labels (including data filtering and cleaning)
-    # pre_processing()
+    # FIXME: Important Note
+    # User needs to call the below function (pre_processing) at least once when running the code.
+    # The below data_loading() function assumes that some files have been created and saved, and will try to load them.
+    # The problem is that one specific file - Dataset/images.npy wasn't added to Git due to large size (> 100MB).
+    # So, run it once, for the mentioned file to be created and after, one can put it in commit and not use it!
+    # _pre_processing()
 
     # Loading the data
     dataset, mean, std = data_loading()

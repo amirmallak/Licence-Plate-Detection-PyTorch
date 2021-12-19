@@ -5,7 +5,7 @@ from cv2 import cv2
 from pandas import set_option
 
 
-def _show_image(dataset, width, height, index):
+def _show_image(dataset: pd.DataFrame, width: int, height: int, index: int) -> None:
     # Picking the image with the corresponding index from the dataset
     image = cv2.imread(fr'./Dataset/Cars License Plates/{dataset["Image_name"].iloc[index]}')
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -22,7 +22,7 @@ def _show_image(dataset, width, height, index):
     plt.show()
 
 
-def exploring(dataset: pd.DataFrame, width, height):
+def exploring(dataset: pd.DataFrame, width: int, height: int) -> None:
     print(f'\nData types are: {dataset.dtypes}')
     set_option('display.width', int(1e2))
     set_option('precision', 2)

@@ -3,10 +3,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from typing import Dict
+from typing import Dict, Tuple
 
 
-def data_loading():
+def data_loading() -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
+    # FIXME: Important Note
+    # Couldn't upload to Git the Dataset/images.npy due to large file size (> 100MB)
     images_path = config.images_path
     plates_path = config.plates_path
     images_statistics_path = config.images_statistics_path

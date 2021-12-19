@@ -26,6 +26,7 @@ def plot(model, WIDTH, HEIGHT, train_loader, train_dataset, training_accuracies,
     # Showing our Neural Model predictions on the Test dataset - image wise
     indices_index = 0
     plt.figure(figsize=(40, 80))
+    plt.title('Model Prediction Results - Test Dataset (Image wise)')
     for i, (image, _) in zip(range(len(test_dataset)), test_loader):
         plt.subplot(3, 4, i + 1)
         plt.axis('off')
@@ -35,9 +36,6 @@ def plot(model, WIDTH, HEIGHT, train_loader, train_dataset, training_accuracies,
         xb, yb = int(y_hat[0][0] * WIDTH), int(y_hat[0][1] * WIDTH)
         xt, yt = int(y_hat[0][2] * WIDTH), int(y_hat[0][3] * WIDTH)
 
-        # image = cv2.resize(cv2.imread("./Cars License Plates/" + row[0]) / 255.0, dsize=(WIDTH, HEIGHT))
-        # image = cv2.cvtColor(image.detach().numpy(), cv2.COLOR_BGR2RGB)
-        # image = cv2.resize(image, dsize=(WIDTH, HEIGHT))
         image_index = test_dataset.indices[indices_index]
         image_path = fr'./Dataset/Cars License Plates/Car_License_Image_{image_index}.jpeg'
         image = cv2.imread(image_path)
@@ -54,6 +52,7 @@ def plot(model, WIDTH, HEIGHT, train_loader, train_dataset, training_accuracies,
 
     indices_index = 0
     plt.figure(figsize=(40, 80))
+    plt.title('Model Prediction Results - Train Dataset (Batch wise)')
     for image_batch, _ in train_loader:
         if indices_index:
             break
@@ -66,9 +65,6 @@ def plot(model, WIDTH, HEIGHT, train_loader, train_dataset, training_accuracies,
             xb, yb = int(y_hat[0].detach().numpy().max() * WIDTH), int(y_hat[1].detach().numpy().max() * WIDTH)
             xt, yt = int(y_hat[2].detach().numpy().max() * WIDTH), int(y_hat[3].detach().numpy().max() * WIDTH)
 
-            # image = cv2.resize(cv2.imread("./Cars License Plates/" + row[0]) / 255.0, dsize=(WIDTH, HEIGHT))
-            # image = cv2.cvtColor(image.detach().numpy(), cv2.COLOR_BGR2RGB)
-            # image = cv2.resize(image, dsize=(WIDTH, HEIGHT))
             image_index = train_dataset.indices[indices_index]
             image_path = fr'./Dataset/Cars License Plates/Car_License_Image_{image_index}.jpeg'
             image = cv2.imread(image_path)
@@ -85,6 +81,7 @@ def plot(model, WIDTH, HEIGHT, train_loader, train_dataset, training_accuracies,
 
     indices_index = 0
     plt.figure(figsize=(40, 80))
+    plt.title('Model Prediction Results - Test Dataset (Batch wise)')
     for image_batch, _ in test_batch_loader:
         y_hat_batch = model(image_batch)
         for i in range(len(test_dataset)):
@@ -95,9 +92,6 @@ def plot(model, WIDTH, HEIGHT, train_loader, train_dataset, training_accuracies,
             xb, yb = int(y_hat[0].detach().numpy().max() * WIDTH), int(y_hat[1].detach().numpy().max() * WIDTH)
             xt, yt = int(y_hat[2].detach().numpy().max() * WIDTH), int(y_hat[3].detach().numpy().max() * WIDTH)
 
-            # image = cv2.resize(cv2.imread("./Cars License Plates/" + row[0]) / 255.0, dsize=(WIDTH, HEIGHT))
-            # image = cv2.cvtColor(image.detach().numpy(), cv2.COLOR_BGR2RGB)
-            # image = cv2.resize(image, dsize=(WIDTH, HEIGHT))
             image_index = test_dataset.indices[indices_index]
             image_path = fr'./Dataset/Cars License Plates/Car_License_Image_{image_index}.jpeg'
             image = cv2.imread(image_path)

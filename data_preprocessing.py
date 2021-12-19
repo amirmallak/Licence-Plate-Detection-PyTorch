@@ -7,8 +7,9 @@ from PIL import Image
 from data_filtering import filtering
 
 
-def pre_processing():
+def _pre_processing():
     df: pd.DataFrame = pd.read_csv(r'./Dataset_web/license.csv')
+
     # Creating a Dataset data frame for Neural Network Model
     dataset = {"Image_name": [],
                "X_Bottom": df['bottom_x'],
@@ -18,6 +19,7 @@ def pre_processing():
 
     # A dictionary that will map an image name (key) to a np.array which represents the Car image (value)
     images = {}
+
     # A dictionary that will map an image name (key) to a np.array which represents the Licence Plate image (value)
     plates = {}
 
@@ -56,9 +58,11 @@ def pre_processing():
         # Cropping an image plate
         image = images[f'Car_License_Image_{index}']
         car_image = Image.fromarray(image)
+
         # Top left point
         x_top = dataset['X_Top'].iloc[index] * image.shape[1]
         y_top = dataset['Y_Top'].iloc[index] * image.shape[0]
+
         # Bottom right point
         x_bottom = dataset['X_Bottom'].iloc[index] * image.shape[1]
         y_bottom = dataset['Y_Bottom'].iloc[index] * image.shape[0]

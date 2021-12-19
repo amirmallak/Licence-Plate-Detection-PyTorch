@@ -5,8 +5,8 @@ import numpy as np
 from torch import Tensor
 
 
-def train(model, train_loader, train_dataset, val_loader, val_dataset, train_step, loss_fn, width):
-    n_epochs = 30
+def train(model, train_loader, train_dataset, val_loader, val_dataset, train_step, loss_fn, width: int) -> tuple:
+    n_epochs = 1
     training_losses = []
     training_accuracies = []
     validation_losses = []
@@ -26,9 +26,11 @@ def train(model, train_loader, train_dataset, val_loader, val_dataset, train_ste
         for x_batch, y_batch in train_loader:
             # x_batch = x_batch.to(device)
             # y_batch = y_batch.to(device)
+
             output: Tensor = model(x_batch)  # model.forward(x_batch)
             loss = train_step(x_batch, y_batch)
             batch_losses.append(loss)
+
             # Check if the mean radius Euclidean metric is bounded below the accuracy percentage specified
             difference_bbox: np.ndarray = np.abs(((output - y_batch) * width).detach().numpy())
             correct += ((np.sum(difference_bbox, axis=1) / 4) < (accuracy_percentage * width)).sum()
@@ -45,10 +47,12 @@ def train(model, train_loader, train_dataset, val_loader, val_dataset, train_ste
                 # x_val = x_val.to(device)
                 # y_val = y_val.to(device)
                 # output: Tensor = model(x_val)  # model.forward(x_batch)
+
                 model.eval()
                 yhat: Tensor = model(x_val)
                 val_loss = loss_fn(model, y_val, yhat)  # .item()
                 val_losses.append(val_loss)
+
                 # Check if the mean radius Euclidean metric is bounded below the accuracy percentage specified
                 difference_bbox: np.ndarray = np.abs(((yhat - y_val) * width).detach().numpy())
                 correct += ((np.sum(difference_bbox, axis=1) / 4) < (accuracy_percentage * width)).sum()
