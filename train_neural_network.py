@@ -6,7 +6,7 @@ from torch import Tensor
 
 
 def train(model, train_loader, train_dataset, val_loader, val_dataset, train_step, loss_fn, width: int) -> tuple:
-    n_epochs = 1
+    n_epochs = 30
     training_losses = []
     training_accuracies = []
     validation_losses = []
