@@ -3,6 +3,7 @@ import torch
 import numpy as np
 
 from torch import Tensor
+# from intersection_over_union import iou_metric
 
 
 def train(model, train_loader, train_dataset, val_loader, val_dataset, train_step, loss_fn, width: int) -> tuple:
@@ -12,6 +13,7 @@ def train(model, train_loader, train_dataset, val_loader, val_dataset, train_ste
     validation_losses = []
     validation_accuracies = []
     accuracy_percentage = 10e-2  # The radius of accuracy circle is 10% of image dimensions
+    # tolerance = 92e-2
     # print(model.state_dict())
 
     times = []
@@ -34,6 +36,9 @@ def train(model, train_loader, train_dataset, val_loader, val_dataset, train_ste
             # Check if the mean radius Euclidean metric is bounded below the accuracy percentage specified
             difference_bbox: np.ndarray = np.abs(((output - y_batch) * width).detach().numpy())
             correct += ((np.sum(difference_bbox, axis=1) / 4) < (accuracy_percentage * width)).sum()
+
+            # correct = iou_metric(y_batch, output).detach().numpy()
+            # correct += np.sum(np.diagonal(correct_2_array) > tolerance)
 
         training_loss = np.mean(batch_losses)
         training_losses.append(training_loss)

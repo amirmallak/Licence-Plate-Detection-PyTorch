@@ -6,7 +6,7 @@ from torch import sigmoid
 from torch.optim import Adam
 from torchsummary import summary
 from torchvision.models import vgg16
-from torch.nn import Sequential, Linear
+from torch.nn import Sequential, Linear, Dropout
 
 
 class LicensePlateDetectionNN(nn.Module):
@@ -19,8 +19,8 @@ class LicensePlateDetectionNN(nn.Module):
                                      self.vgg16.avgpool)
 
         # Freezing the weights in the transferred VGG16 Neural Network
-        for param in self.classifier.parameters():
-            param.requires_grad = False
+        # for param in self.classifier.parameters():
+        #     param.requires_grad = False
 
         self.fc1 = Linear((7 * 7 * 512), 128)
         self.bn1 = nn.BatchNorm1d(128)
@@ -29,12 +29,15 @@ class LicensePlateDetectionNN(nn.Module):
         self.fc3 = Linear(128, 64)
         self.bn3 = nn.BatchNorm1d(64)
         self.fc4 = Linear(64, 4)  # Our output coordinates (x_t, y_t, x_b, y_b)
+        self.drop_out = Dropout(0.25)  # Dropout neurons with probability P = 0.25
 
     def forward(self, x):
         x = self.classifier(x)
         x = torch.flatten(x, 1)
         x = nn_func.relu(self.bn1(self.fc1(x)))
+        x = self.drop_out(x)
         x = nn_func.relu(self.bn2(self.fc2(x)))
+        x = self.drop_out(x)
         x = nn_func.relu(self.bn3(self.fc3(x)))
         x = sigmoid(self.fc4(x))
 
