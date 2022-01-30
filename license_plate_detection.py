@@ -3,6 +3,8 @@ import config
 from AI_Model import build_AI_model
 from data_exploring import exploring
 from loading_data import data_loading
+from data_preprocessing import _pre_processing
+from kaggle_data_loading import kaggle_data_loading
 
 
 def license_plate_detection():
